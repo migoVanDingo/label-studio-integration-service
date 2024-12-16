@@ -1,0 +1,14 @@
+--LABEL STUDIO PROJECT
+CREATE TABLE label_studio_project (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    ls_id VARCHAR(32) NOT NULL UNIQUE,
+    label_studio_project_id INT NOT NULL,
+    datastore_subset_id VARCHAR(32) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(1024) NULL,
+    result JSON NULL,
+    is_active INT NOT NULL,
+    created_by VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_by VARCHAR(255) NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);

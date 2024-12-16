@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  flask_app:
+    build: .
+    command: flask rq worker --verbose label-studio-job
+    ports:
+      - "5005:5005"  # Map host port 5000 to container port 5000
+    volumes:
+      - .:/app  # Mount the current directory to /app in the container
+    environment:
+      FLASK_ENV: development  # Set Flask environment to development
