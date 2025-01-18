@@ -1,5 +1,4 @@
-class RequestSyncImportStorage:
-
+class RequestValidateLabelConfig():
     def __init__():
         pass
 

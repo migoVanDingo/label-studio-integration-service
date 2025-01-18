@@ -11,14 +11,15 @@ from dao.table_label_studio_project import TableLabelStudioProject
 
 
 class RequestCreateLabelStudioProject(AbstractLabelStudio):
-    def __init__(self, payload):
+    def __init__(self, request_id: str, payload: dict):
         super().__init__()
+        self.request_id = request_id    
         self.payload = payload
         self.table_label_studio_project = TableLabelStudioProject()
 
     def do_process(self):
         try:
-            current_app.logger.info(f"CLASS: {self.__class__.__name__} -- PAYLOAD: {self.payload}")
+            current_app.logger.info(f"{self.request_id} --- {self.__class__.__name__} -- PAYLOAD: {self.payload}")
 
             label_studio_payload = {
                 "title": self.payload["name"],
@@ -27,7 +28,7 @@ class RequestCreateLabelStudioProject(AbstractLabelStudio):
 
             response = self.create_label_studio_project(json.dumps(label_studio_payload))
 
-            #current_app.logger.info(f"CLASS: {self.__class__.__name__} -- RESPONSE: {response}")
+            #current_app.logger.info(f"{self.request_id} --- {self.__class__.__name__} -- RESPONSE: {response}")
 
 
             if "status_code" in response:
@@ -43,19 +44,19 @@ class RequestCreateLabelStudioProject(AbstractLabelStudio):
             }
             validated_payload = ICreateLabelStudioProject(**insert_payload)
             
-            #current_app.logger.info(f"CLASS: {self.__class__.__name__} -- LABEL_STUDIO_PROJECT INSERT: {validated_payload}")
+            #current_app.logger.info(f"{self.request_id} --- {self.__class__.__name__} -- LABEL_STUDIO_PROJECT INSERT: {validated_payload}")
 
             record = self.table_label_studio_project.insert(validated_payload.model_dump())
 
             return_object = { "status": "success", "data": record }
 
-            current_app.logger.info(f"CLASS: {self.__class__.__name__} -- RETURN: {return_object}")
+            current_app.logger.info(f"{self.request_id} --- {self.__class__.__name__} -- RETURN: {return_object}")
             
             return return_object
         
         except Exception as e:
-            current_app.logger.error(f"CLASS: {self.__class__.__name__} -- ERROR: {str(e)}")
-            current_app.logger.error(f"TRACE: {traceback.format_exc()}")
+            current_app.logger.error(f"{self.request_id} --- CLASS: {self.__class__.__name__} -- ERROR: {str(e)}")
+            current_app.logger.error(f"{self.request_id} --- TRACE: {traceback.format_exc()}")
             return { "status": "failed", "error": str(e) }
         
 
