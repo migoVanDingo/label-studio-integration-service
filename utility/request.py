@@ -2,7 +2,7 @@ import traceback
 import requests
 
 from flask import current_app, request
-from utility.constant import Constant
+from utility.Constant import Constant
 from utility.error import ThrowError
 from utility.payload.request_payload import RequestPayload
 
@@ -15,7 +15,7 @@ class IInsert:
 
 class Request:
     def __init__(self):
-        self.service = Constant.service
+        self.service = Constant.service_name
         self.headers = self.get_headers()
         
     

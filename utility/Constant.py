@@ -3,8 +3,13 @@ class Constant:
     
 
     labeler_output_dir = "/Users/bubz/Developer/master-project/tests/test-labeler-output"
+    webhook_endpoint = "/api/webhook-handler/project-update"
+    webhook_events = ["PROJECT_UPDATED"]
+    local_port = "5016"
+    label_studio_user_token = "4bf3e0cdb26c83f497c291750f634ce23198342f"
 
     base_url = "http://localhost:"
+    local_port = "8080"
     dao_port = "5010"
 
     dao = {

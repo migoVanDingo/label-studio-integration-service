@@ -1,4 +1,4 @@
-import traceback
+""" import traceback
 from flask import current_app, json
 
 from api.handler.request_create_label_studio_project import RequestCreateLabelStudioProject
@@ -86,4 +86,4 @@ class RequestCheckForJobs:
                     return {"status": "failed", "error": response['error']}
 
 
-        return checklist
+        return checklist """

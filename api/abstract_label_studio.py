@@ -1,9 +1,11 @@
 from abc import ABC, abstractmethod
 import os, json
+from flask import current_app
 import requests
 from dotenv import load_dotenv
 
 from dao.table_label_studio_project import TableLabelStudioProject
+from utility.Constant import Constant
 load_dotenv()
 
 
@@ -11,10 +13,10 @@ class AbstractLabelStudio(ABC):
     def __init__(self):
         super().__init__()
         self.table_label_studio_project = TableLabelStudioProject()
-        self.token=os.environ['LABEL_STUDIO_USER_TOKEN']
+        self.token=Constant.label_studio_user_token
 
     def get_token(self):
-        return os.environ['LABEL_STUDIO_USER_TOKEN']
+        return Constant.label_studio_user_token
 
     def get_headers(self):
         headers = {
@@ -34,6 +36,9 @@ class AbstractLabelStudio(ABC):
     def endpoint_url_create_label_studio_project(self):
         return "http://localhost:8080/api/projects"
     
+    def endpoint_url_validate_project_config(self, label_studio_project_id):
+        return "http://localhost:8080/api/projects/{}/validate".format(label_studio_project_id)
+    
     def endpoint_url_create_webhook(self):
         return "http://localhost:8080/api/webhooks"
     
@@ -49,7 +54,7 @@ class AbstractLabelStudio(ABC):
     def endpoint_url_delete_label_studio_project(self, label_studio_project_id):
         return "http://localhost:8080/api/projects/{}".format(label_studio_project_id)
     
-    def endpoint_validate_label_config(self):
+    def endpoint_url_validate_label_config(self):
         return "http://localhost:8080/api/projects/validate"
     
     def endpoint_url_create_import_storage(self):
@@ -61,7 +66,8 @@ class AbstractLabelStudio(ABC):
     def endpoint_url_get_all_frames(self, project_id):
         return "http://localhost:8080/api/projects/"+ str(project_id) +"/export?exportType=JSON&interpolate_key_frames=true"
     
-
+    def endpoint_url_delete_project(self, project_id):
+        return "http://localhost:8080/api/projects/{}/".format(project_id)
 
 
 
@@ -77,36 +83,46 @@ class AbstractLabelStudio(ABC):
     
     def delete(self, url, headers):
         return requests.delete(url, headers=headers)
+    
+    def post_no_payload(self, url, headers):
+        return requests.post(url, headers=headers)
 
 
 
     # Interact with Label Studio
+
+    def delete_project(self, project_id):
+        return self.delete(self.endpoint_url_delete_project(project_id), self.get_headers())
+
     def create_label_studio_project(self, payload):
         return self.post(self.endpoint_url_create_label_studio_project(), payload, self.get_headers()).json()
+    
+    def validate_project_label_config(self, label_studio_project_id, config):
+        return self.post(self.endpoint_url_validate_project_config(label_studio_project_id), config, self.get_headers()).json()
 
     def get_label_studio_project_list(self):
-        return self.get(self.endpoint_url_get_project_list(), self.get_headers())
+        return self.get(self.endpoint_url_get_project_list(), self.get_headers()).json()
 
     def get_label_studio_project(self, label_studio_project_id):
-        return self.get(self.endpoint_url_get_label_studio_project(label_studio_project_id), self.get_headers())
+        return self.get(self.endpoint_url_get_label_studio_project(label_studio_project_id), self.get_headers()).json()
 
     def update_label_studio_project(self, label_studio_project_id, payload):
-        return self.patch(self.endpoint_url_update_label_studio_project(label_studio_project_id), payload, self.get_headers())
+        return self.patch(self.endpoint_url_update_label_studio_project(label_studio_project_id), payload, self.get_headers()).json()
 
     def delete_label_studio_project(self, label_studio_project_id):
-        return self.delete(self.endpoint_url_delete_label_studio_project(label_studio_project_id), self.get_headers())
+        return self.delete(self.endpoint_url_delete_label_studio_project(label_studio_project_id), self.get_headers()).json()
 
     def validate_label_config(self, config):
-        return self.post(self.endpoint_validate_label_config(), config, self.get_headers())
+        return self.post(self.endpoint_url_validate_label_config(), config, self.get_headers())
     
     def create_webhook(self, payload):
-        return self.post(self.endpoint_url_create_webhook(), payload, headers=self.get_webhook_headers())
+        return self.post(self.endpoint_url_create_webhook(), payload, headers=self.get_webhook_headers()).json()
     
     def create_import_storage(self, payload):
-        return self.post(self.endpoint_url_create_import_storage(), payload, self.get_headers())
+        return self.post(self.endpoint_url_create_import_storage(), payload, self.get_headers()).json()
     
-    def sync_import_storage(self, local_storage_id, payload):
-        return self.post(self.endpoint_url_sync_import_storage(local_storage_id), payload, self.get_headers())
+    def sync_import_storage(self, local_storage_id):
+        return self.post_no_payload(self.endpoint_url_sync_import_storage(local_storage_id), self.get_headers()).json()
 
 
     @abstractmethod
