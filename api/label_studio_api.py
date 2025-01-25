@@ -17,9 +17,11 @@ from api.handler.request_get_label_studio_info import RequestGetLabelStudioInfo
 from api.handler.request_initialize_import_storage import RequestInitializeImportStorage
 from api.handler.request_initialize_webhook import RequestInitializeWebhook
 from api.handler.request_launch_labeler import RequestLaunchLabeler
+from api.handler.request_pull_annotation_all_frames import RequestPullAnnotationAllFrames
 from api.handler.request_sync_storage import RequestSyncImportStorage
 from api.handler.request_validate_label_config import RequestValidateLabelConfig
 from api.handler.request_validate_project_config import RequestValidateProjectConfig
+from api.handler.request_verify_temp_output_path import RequestVerifyTempOutputPath
 
 
 label_studio_api = Blueprint('label_studio_api', __name__)
@@ -160,6 +162,52 @@ def sync_import_storage():
         return { "status": response["status"], "data": data}
     
     return response
+
+
+
+# Pull all frames from Label Studio
+@label_studio_api.route('/api/label-project/pull/annotation/all-frames', methods=['POST'])
+def pull_all_frames():
+    data = json.loads(request.data)
+    if "request_id" in data:
+        request_id = data['request_id']
+    elif "job_id" in data:
+        request_id = data['job_id']
+    else:
+        request_id = g.request_id
+    
+    api_request = RequestPullAnnotationAllFrames(request_id, data)
+    response = api_request.do_process()
+
+    if response["status"] == "SUCCESS":
+        res_data = response["data"]
+        res_data.update(data)
+        return { "status": response["status"], "data": res_data}
+
+    return response
+
+
+# Verify Temporary Output Directory
+@label_studio_api.route('/api/label-project/temp-output/verify', methods=['POST'])
+def verify_temp_output():
+    data = json.loads(request.data)
+    if "request_id" in data:
+        request_id = data['request_id']
+    elif "job_id" in data:
+        request_id = data['job_id']
+    else:
+        request_id = g.request_id
+    
+    api_request = RequestVerifyTempOutputPath(request_id, data)
+    response = api_request.do_process()
+
+    if response["status"] == "SUCCESS":
+        res_data = response["data"]
+        res_data.update(data)
+        return { "status": response["status"], "data": res_data}
+
+    return response
+
 
 
 

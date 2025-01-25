@@ -27,7 +27,7 @@ class RequestLaunchLabeler(AbstractHandler):
                 raise Exception(f"{self.request_id} --- {self.__class__.__name__} -- ERROR: Failed to open labeling project, No project found")
             
 
-            webbrowser.open(Constant.base_url + Constant.local_port + "/projects/" + str(label_project_response["response"]["label_studio_internal_id"]) + "/data")
+            webbrowser.open(Constant.base_url + Constant.label_port + "/projects/" + str(label_project_response["response"]["label_studio_internal_id"]) + "/data")
 
             return {"status": "SUCCESS"}
 

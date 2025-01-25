@@ -62,7 +62,7 @@ class RequestCreateLabelStudioProject(AbstractLabelStudio):
                 return {"status": "SUCCESS", "data": {}}
 
             # Use payload to form Label Studio project title and description
-            title = f"{self.payload['set_name']}::{self.payload['project_name']}"
+            title = f"{self.payload['set_name']}__{self.payload['project_name']}"
 
             # -> Description: [{config field_name}: { payload[field_name]}] + description
             ## All of this data must be added to the label studio project description so that when the project is updated in Label Studio (e.g. people annotate video files) the files can then be identified and processed by the web app.

@@ -9,8 +9,16 @@ class Constant:
     label_studio_user_token = "4bf3e0cdb26c83f497c291750f634ce23198342f"
 
     base_url = "http://localhost:"
-    local_port = "8080"
+    label_port = "8080"
     dao_port = "5010"
+    services = {
+        "JOB": {
+            "PORT": "5017",
+            "ENDPOINT": {
+                "CREATE-JOB": "/api/job/new",
+            }
+        }
+    }
 
     dao = {
         "create": "/api/create",
@@ -45,6 +53,8 @@ class Constant:
             "CREATE_IMPORT_STORAGE":"create_label_studio_import_storage",
             "SYNC_IMPORT_STORAGE":"sync_label_studio_import_storage",
         }
+    
+    
 
     
 Constant.tasks = staticmethod(Constant.tasks)
