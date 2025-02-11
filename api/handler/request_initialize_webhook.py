@@ -1,6 +1,5 @@
 import traceback
 from flask import current_app
-import requests
 
 from api.abstract_label_studio import AbstractLabelStudio
 from api.entity.payload_initialize_webhook import IInitializeWebhook, PayloadInitializeWebhook

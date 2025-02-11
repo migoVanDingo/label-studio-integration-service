@@ -1,7 +1,7 @@
 from flask import current_app
 
 from api.abstract_label_studio import AbstractLabelStudio
-from api.entity.payload_sync_import_storage import ISyncImportStorage, PayloadSyncImportStorage
+from api.entity.payload_sync_import_storage import ISyncImportStorage
 
 
 class RequestSyncImportStorage(AbstractLabelStudio):

@@ -1,5 +1,5 @@
 import traceback
-from flask import current_app
+from flask import current_app, jsonify, make_response
 from interface.abstract_handler import AbstractHandler
 from utility.request import Request
 
@@ -24,7 +24,10 @@ class RequestGetLabelProjectsList(AbstractHandler):
                 return {"status": "SUCCESS", "data": []}
             
             current_app.logger.info(f"{self.request_id} --- {self.__class__.__name__} -- GET_LABEL_PROJECTS_LIST RESPONSE: {label_project_list_response['response']}")    
-            return {"status": "SUCCESS", "data": label_project_list_response["response"]}
+            response = make_response(jsonify({"status": "SUCCESS", "data": label_project_list_response["response"]}), 200)
+            response.headers['Access-Control-Allow-Origin'] = "http://localhost:5173"
+            response.headers['Access-Control-Allow-Credentials'] = "true"
+            return response
 
 
         except Exception as e:

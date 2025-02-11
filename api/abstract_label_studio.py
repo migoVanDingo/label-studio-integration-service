@@ -1,10 +1,7 @@
 from abc import ABC, abstractmethod
-import os, json
-from flask import current_app
 import requests
 from dotenv import load_dotenv
 
-from dao.table_label_studio_project import TableLabelStudioProject
 from utility.Constant import Constant
 load_dotenv()
 
@@ -12,7 +9,6 @@ load_dotenv()
 class AbstractLabelStudio(ABC):
     def __init__(self):
         super().__init__()
-        self.table_label_studio_project = TableLabelStudioProject()
         self.token=Constant.label_studio_user_token
 
     def get_token(self):

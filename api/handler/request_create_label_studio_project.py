@@ -1,12 +1,7 @@
-from dao.table_label_studio_project import TableLabelStudioProject
-from api.entity.interface_create_label_studio_project import ICreateLabelStudioProject
 from api.abstract_label_studio import AbstractLabelStudio
-from operator import attrgetter
-import os
 import traceback
 
 from flask import current_app, json
-import requests
 from dotenv import load_dotenv
 
 from api.entity.payload_create_label_studio_project import ICreateLabelProject, PayloadCreateLabelStudioProject

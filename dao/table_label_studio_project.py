@@ -1,4 +1,4 @@
-import traceback
+""" import traceback
 from flask import current_app
 from dao.connect import Database
 from utility.Utils import Utils
@@ -94,4 +94,4 @@ class TableLabelStudioProject:
         except Exception as e:
             current_app.logger.error(f"CLASS: {self.__class__.__name__} -- DAO -- ERROR: {str(e)}")
             current_app.logger.error(f"TRACE: {traceback.format_exc()}")
-            return f"CLASS: {self.__class__.__name__} -- DAO -- ERROR: {str(e)}"
+            return f"CLASS: {self.__class__.__name__} -- DAO -- ERROR: {str(e)}" """

@@ -1,4 +1,4 @@
-from flask_mysqldb import MySQL
+""" from flask_mysqldb import MySQL
 from flask import current_app
 
 class Database:
@@ -62,3 +62,4 @@ class Database:
         with self.app.app_context():  # Ensure the app context is active
             connection = self.mysql.connect  # Get the actual connection object
             return connection
+ """

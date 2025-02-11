@@ -1,4 +1,4 @@
-import traceback
+""" import traceback
 from flask import current_app, jsonify
 
 from dao.connect import Database
@@ -80,3 +80,4 @@ class TableJobs:
             return False
         
 
+ """

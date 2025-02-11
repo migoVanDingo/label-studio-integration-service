@@ -5,7 +5,6 @@ from api.abstract_label_studio import AbstractLabelStudio
 from api.entity.payload_validate_label_config import IValidateLabelConfig
 from classes.label_studio import LabelStudio
 from interface.abstract_handler import AbstractHandler
-from utility.error import ThrowError
 
 
 """

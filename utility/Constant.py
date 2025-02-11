@@ -6,7 +6,7 @@ class Constant:
     webhook_endpoint = "/api/webhook-handler/project-update"
     webhook_events = ["PROJECT_UPDATED"]
     local_port = "5016"
-    label_studio_user_token = "4bf3e0cdb26c83f497c291750f634ce23198342f"
+    label_studio_user_token = "ed64117171762ad395fd21288d789e2e3510667f"
 
     base_url = "http://localhost:"
     label_port = "8080"
