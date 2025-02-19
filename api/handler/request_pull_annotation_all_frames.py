@@ -30,6 +30,7 @@ class RequestPullAnnotationAllFrames(AbstractHandler):
             return {"status": "SUCCESS", "data": {"temp_output_path": path, "json_file_name": file_name}}
 
         except Exception as e:
+            current_app.logger.error(f"{self.request_id} --- CLASS: {self.__class__.__name__} -- ERROR: {str(e)}")
             return {"status": "FAILED", "error": str(e)}
         
     def _form_pull_command(self, project_id, task_id, token, file_name):
