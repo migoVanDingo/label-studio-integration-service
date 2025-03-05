@@ -44,6 +44,12 @@ def handle_options():
         request_id = str(uuid.uuid4())
         g.request_id = request_id
 
+@app.after_request
+def add_cors_headers(response):
+    response.headers['Access-Control-Allow-Origin'] = "http://localhost:5173"
+    response.headers['Access-Control-Allow-Credentials'] = "true"
+    return response
+
 
 @app.errorhandler(ThrowError)
 def handle_throw_error(error):
